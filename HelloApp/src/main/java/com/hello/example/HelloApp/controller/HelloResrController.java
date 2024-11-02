@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloResrController {
 	@GetMapping(value="/msg")
 public String getMessage() {
-	return "Hello 2 All...!!";
+	return "Say Hello 2 All...!!";
 }
 }
