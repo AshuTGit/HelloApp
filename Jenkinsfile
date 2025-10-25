@@ -1,6 +1,10 @@
 pipeline {
     agent any
-
+     environment {        
+        // Tomcat installation details
+        TOMCAT_HOME = "C:Tomcat9.0"
+        DEPLOY_PATH = "${TOMCAT_HOME}\\webapps"
+    }
     stages {
         stage('clone') {
             steps {
@@ -24,7 +28,19 @@ pipeline {
             steps {
                 echo 'Deployment Started'
 
-               deploy adapters: [tomcat9(credentialsId: 'tomcat_credential_id', path: '', url: 'http://localhost:8081/')], contextPath: null, war: '**/*.war'
+              script {
+                    def warFile = findFiles(glob: 'HelloApp/target/*.war')[0].path
+                    bat """
+                        echo Stopping Tomcat...
+                        ${TOMCAT_HOME}\\bin\\shutdown.bat || echo Tomcat not running
+
+                        echo Copying WAR to webapps...
+                        copy /Y "${warFile}" "${DEPLOY_PATH}\\HelloApp.war"
+
+                        echo Starting Tomcat...
+                        ${TOMCAT_HOME}\\bin\\startup.bat
+                    """
+                }
 
                 echo 'Deployment Completed'
             }
