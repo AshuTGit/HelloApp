@@ -22,6 +22,10 @@ pipeline {
    
         stage('Deployment') {
             steps {
+                echo 'Deployment Started'
+
+                deploy adapters: [tomcat9(credentialsId: 'tomcat_credential_id', path: '', url: 'http://localhost:8081/')], contextPath: null, war: '**/*.war'
+
                 echo 'Deployment Completed'
             }
         }
