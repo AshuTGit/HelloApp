@@ -2,9 +2,21 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('clone') {
             steps {
-                echo 'Hello World'
+                echo 'Code checkout completed'
+            }
+        }
+    
+        stage('Build') {
+            steps {
+                echo 'Build Completed'
+            }
+        }
+   
+        stage('Deployment') {
+            steps {
+                echo 'Deployment Completed'
             }
         }
     }
