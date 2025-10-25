@@ -10,7 +10,8 @@ pipeline {
     
         stage('Build') {
             steps {
-                echo 'Build Completed'
+               echo '========== Building Maven Project =========='
+                'mvn clean install -Dmaven.test.skip=true'
             }
         }
    
