@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('clone') {
             steps {
-                echo 'Code checkout completed'
+               echo 'Checking out code from Git...'
+                git branch: 'master', url: 'https://github.com/AshuTGit/HelloApp.git'
             }
         }
     
