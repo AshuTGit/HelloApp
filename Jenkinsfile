@@ -12,6 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                echo '========== Building Maven Project =========='
+                bat 'cd HelloApp'
                 bat 'mvn clean install -Dmaven.test.skip=true'
             }
         }
