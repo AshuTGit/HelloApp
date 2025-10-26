@@ -1,6 +1,13 @@
 pipeline {
     agent any
 
+		 environment {        
+		        // Tomcat installation details
+		        TOMCAT_HOME = "C:Tomcat9.0"
+		        DEPLOY_PATH = "${TOMCAT_HOME}\\webapps"
+		    }
+
+	
     stages {
         stage('clone') {
             steps {
