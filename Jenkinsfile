@@ -29,14 +29,14 @@ pipeline {
 
                     script {
                         bat """
-                            echo Stopping Tomcat...
+                            echo 'Stopping Tomcat...'
                             call "${TOMCAT_HOME}\\bin\\shutdown.bat" || echo Tomcat not running
                     
-                            echo Copying WAR to webapps...
+                            echo 'Copying WAR to webapps...'
                             cd HelloApp\\target
                             for %%f in (*.war) do copy /Y "%%f" "${DEPLOY_PATH}\\"
                     
-                            echo Starting Tomcat...
+                            echo S'tarting Tomcat...'
                             call "${TOMCAT_HOME}\\bin\\startup.bat"
                         """
                     }
