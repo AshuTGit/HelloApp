@@ -35,7 +35,7 @@ pipeline {
 
 					 dir('HelloApp/target'){
 						echo "Copying WAR to webapps..."
-						bat 'copy /Y "*.war" "%DEPLOY_PATH%\\"'
+						bat 'copy /Y "*.war" %DEPLOY_PATH%\\'
 						}
 										
 					bat """
