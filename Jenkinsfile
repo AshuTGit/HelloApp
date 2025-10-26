@@ -30,15 +30,17 @@ pipeline {
 
               script {
                    
-                  dir('HelloApp/target') {
-                      def warFile =  '**/*.war'
-                 }
+                
                     bat """
                         echo Stopping Tomcat...
                         ${TOMCAT_HOME}\\bin\\shutdown.bat || echo Tomcat not running
 
                         echo Copying WAR to webapps...
-                        copy /Y "${warFile}" "${DEPLOY_PATH}\\HelloApp.war"
+                          dir('HelloApp/target') {
+                      def warFile =  '**/*.war'
+                       copy /Y "${warFile}" "${DEPLOY_PATH}\\"
+                         }
+                       
 
                         echo Starting Tomcat...
                         ${TOMCAT_HOME}\\bin\\startup.bat
