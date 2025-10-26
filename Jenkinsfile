@@ -38,7 +38,7 @@ pipeline {
                         echo Copying WAR to webapps...
                           dir('HelloApp/target') {
                       def warFile =  '**/*.war'
-                       copy /Y "${warFile}" "${DEPLOY_PATH}\\"
+                       copy /Y "**/*.war" "${DEPLOY_PATH}\\"
                          }
                        
 
