@@ -33,11 +33,13 @@ pipeline {
 				
 				script {
 
-					dir('HelloApp/target'){
-						echo 'Copying WAR to webapps...'
-                        copy /Y "*.war" "${DEPLOY_PATH}\\"
-					}
+					 dir('HelloApp/target'){
+						echo "Copying WAR to webapps..."
+						bat 'copy /Y "*.war" "${DEPLOY_PATH}\\"'
+						}
+										
 					bat """
+					
 					    echo Current workspace: %WORKSPACE%
 					    dir "%WORKSPACE%\\HelloApp\\target"
 					    echo DEPLOY_PATH: %DEPLOY_PATH%
