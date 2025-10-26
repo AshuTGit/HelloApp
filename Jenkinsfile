@@ -32,6 +32,11 @@ pipeline {
                 echo 'Deployment strated'
 				
 				script {
+
+					dir('HelloApp/target'){
+						echo 'Copying WAR to webapps...'
+                        copy /Y "*.war" "${DEPLOY_PATH}\\"
+					}
 					bat """
 					    echo Current workspace: %WORKSPACE%
 					    dir "%WORKSPACE%\\HelloApp\\target"
