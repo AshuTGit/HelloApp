@@ -25,18 +25,24 @@ pipeline {
         }
    
         stage('Deployment') {
-            echo 'Deployment Started'
+            script
+            {
+             dir('HelloApp/target') {
+                      def warFile =  '**/*.war'
+                 }
+                
+                    bat """
+                        echo Stopping Tomcat...
+                        ${TOMCAT_HOME}\\bin\\shutdown.bat || echo Tomcat not running
 
-                    script {
-                        bat """
-                        echo Current workspace: %WORKSPACE%
-                        dir "%WORKSPACE%\\HelloApp\\target"
-                        echo DEPLOY_PATH: %DEPLOY_PATH%
-                        """
-                    }
+                        echo Copying WAR to webapps...
+                        copy /Y "${warFile}" "${DEPLOY_PATH}\\HelloApp.war"
+                          dir('HelloApp/target') {
+                      def warFile =  '**/*.war'
+                       copy /Y "${warFile}" "${DEPLOY_PATH}\\"
 
-                    echo 'Deployment Completed'
-
+                       """
+        }
            
         }
     }
