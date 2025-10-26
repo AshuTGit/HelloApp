@@ -25,19 +25,13 @@ pipeline {
                 echo 'Deployment strated'
 				
 				script {
-				
+					bat """
+					    echo Current workspace: %WORKSPACE%
+					    dir "%WORKSPACE%\\HelloApp\\target"
+					    echo DEPLOY_PATH: %DEPLOY_PATH%
+					"""
 					
-                    def warFile = findFiles(glob: 'HelloApp/target/*.war')[0].path
-                    bat """
-                        echo Stopping Tomcat...
-                        %CATALINA_HOME%\\bin\\shutdown.bat || echo Tomcat not running
-
-                        echo Copying WAR to webapps...
-                        copy /Y "${warFile}" "${DEPLOY_PATH}\\HelloApp.war"
-
-                        echo Starting Tomcat...
-                        ${TOMCAT_HOME}\\bin\\startup.bat
-                    """
+                   
                 }
 				
 				echo 'Deployment Completed'
