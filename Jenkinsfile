@@ -31,7 +31,7 @@ pipeline {
               script {
                    
                   dir('HelloApp/target') {
-                      def warFile = findFiles(glob: 'HelloApp/target/*.war')[0].path
+                      def warFile =  '**/*.war'
                  }
                     bat """
                         echo Stopping Tomcat...
