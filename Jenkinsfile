@@ -61,7 +61,7 @@ pipeline {
 						echo "Starting Tomcat..."
 
 						timeout(time: 15, unit: 'SECONDS') {
- 						   bat 'call "${TOMCAT_HOME}\\bin\\catalina.bat" run'
+ 						   bat call "${TOMCAT_HOME}\\bin\\catalina.bat" run
 							}
 															
 					} catch (err) {
