@@ -58,9 +58,9 @@ pipeline {
 							echo "Copying WAR Completed."
 						}
 
-						echo Starting Tomcat...
+						echo "Starting Tomcat..."
 							bat """
-                       			${TOMCAT_HOME}\\bin\\startup.bat
+                       		   call ${TOMCAT_HOME}\\bin\\startup.bat
 							"""
 								
 					} catch (err) {
