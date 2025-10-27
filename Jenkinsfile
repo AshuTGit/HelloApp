@@ -38,12 +38,16 @@ pipeline {
 						
 							
 							bat """
-							
+								 echo Stopping Tomcat...
+                      			%CATALINA_HOME%\\bin\\shutdown.bat || echo Tomcat not running
 							    echo Current workspace: %WORKSPACE%
 							    dir "%WORKSPACE%\\HelloApp\\target"
 							    echo DEPLOY_PATH: %DEPLOY_PATH%
 		
 								copy /Y "*.war" %DEPLOY_PATH%\\
+
+								echo Starting Tomcat...
+                       			${TOMCAT_HOME}\\bin\\startup.bat
 							"""
 					 }
                    
