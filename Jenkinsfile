@@ -35,7 +35,15 @@ pipeline {
 					try{
 						bat """
 								 echo Stopping Tomcat...
-                      			%CATALINA_HOME%\\bin\\shutdown.bat || echo Tomcat not running
+
+								   @echo off
+					                    call "%TOMCAT_HOME%\\bin\\shutdown.bat"
+					                    if %errorlevel% neq 0 (
+					                        echo [WARN] Tomcat may not be running or port 8005 is blocked.
+					                        echo Continuing deployment anyway...
+					                        exit /b 0
+					                    )
+                      			
 								"""
 								
 					} catch (err) {
