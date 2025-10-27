@@ -60,9 +60,8 @@ pipeline {
 
 						echo "Starting Tomcat..."
 
-						timeout(time: 55, unit: 'SECONDS') {
- 						   bat call "${TOMCAT_HOME}\\bin\\catalina.bat" run
-							}
+						powershell -Command "Start-Process -FilePath ${TOMCAT_HOME}\\bin\\catalina.bat -ArgumentList 'start' -WindowStyle Hidden"
+						
 															
 					} catch (err) {
 						 echo 'issue with Deployment. Rollback is in progress.'
