@@ -41,28 +41,7 @@ pipeline {
 					} catch (err) {
 						 echo Tomcat not running
 					}
-					try{
-						echo "Copying WAR to webapps..."
-						dir('HelloApp/target'){
-						echo "Copying WAR to webapps..."
-						
-							
-							bat """
-								echo Current workspace: %WORKSPACE%
-							    dir "%WORKSPACE%\\HelloApp\\target"
-							    echo DEPLOY_PATH: %DEPLOY_PATH%
-		
-								copy /Y "*.war" %DEPLOY_PATH%\\
-
-								echo Starting Tomcat...
-                       			${TOMCAT_HOME}\\bin\\startup.bat
-							"""
-					 }
-					} catch (err) {
-						 echo 'Deployment Failed!! RollBack is in-progress.'
-					}
-					 
-                   
+					
                 }
 				
 				echo 'Deployment Completed'
