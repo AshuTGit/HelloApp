@@ -32,15 +32,23 @@ pipeline {
                 echo 'Deployment strated'
 				
 				script {
-
-					 dir('HelloApp/target'){
+					try{
+						bat """
+								 echo Stopping Tomcat...
+                      			%CATALINA_HOME%\\bin\\shutdown.bat || echo Tomcat not running
+								"""
+								
+					} catch (err) {
+						 echo Tomcat not running
+					}
+					try{
+						echo "Copying WAR to webapps..."
+						dir('HelloApp/target'){
 						echo "Copying WAR to webapps..."
 						
 							
 							bat """
-								 echo Stopping Tomcat...
-                      			%CATALINA_HOME%\\bin\\shutdown.bat || echo Tomcat not running
-							    echo Current workspace: %WORKSPACE%
+								echo Current workspace: %WORKSPACE%
 							    dir "%WORKSPACE%\\HelloApp\\target"
 							    echo DEPLOY_PATH: %DEPLOY_PATH%
 		
@@ -50,6 +58,10 @@ pipeline {
                        			${TOMCAT_HOME}\\bin\\startup.bat
 							"""
 					 }
+					} catch (err) {
+						 echo 'Deployment Failed!! RollBack is in-progress.'
+					}
+					 
                    
                 }
 				
