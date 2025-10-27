@@ -60,7 +60,6 @@ pipeline {
 
 						echo "Starting Tomcat..."
 
-						powershell -Command "Start-Process -FilePath ${TOMCAT_HOME}\\bin\\catalina.bat -ArgumentList start -WindowStyle Hidden"
 						
 															
 					} catch (err) {
