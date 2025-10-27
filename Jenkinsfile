@@ -60,7 +60,7 @@ pipeline {
 
 						echo "Starting Tomcat..."
 							bat """
-                       		  call "${TOMCAT_HOME}\\bin\\startup.bat"
+                       		  call "${TOMCAT_HOME}\\bin\\catalina.bat" run
 							"""
 								
 					} catch (err) {
