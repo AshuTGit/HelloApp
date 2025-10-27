@@ -59,10 +59,11 @@ pipeline {
 						}
 
 						echo "Starting Tomcat..."
-							bat """
-                       		  call "${TOMCAT_HOME}\\bin\\catalina.bat" run
-							"""
-								
+
+						timeout(time: 15, unit: 'SECONDS') {
+ 						   bat 'call "${TOMCAT_HOME}\\bin\\catalina.bat" run'
+							}
+															
 					} catch (err) {
 						 echo 'issue with Deployment. Rollback is in progress.'
 					}
