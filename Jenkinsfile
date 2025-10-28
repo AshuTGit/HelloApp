@@ -61,7 +61,7 @@ pipeline {
 						echo "Starting Tomcat..."
 
 						bat """
-                       		 call "${TOMCAT_HOME}\\bin\\catalina.bat" run
+                       		 call "${TOMCAT_HOME}\\bin\\service.bat" run
 							 exit /b 0
 							"""
 															
