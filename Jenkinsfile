@@ -61,9 +61,8 @@ pipeline {
 						echo "Starting Tomcat..."
 
 						bat """
-						  @echo off
-                       		 call "${TOMCAT_HOME}\\bin\\service.bat" run
-							 exit /b 0
+						     powershell -Command "Start-Process -FilePath 'C:\\Tomcat9.0\\bin\\catalina.bat' -ArgumentList 'start' -WindowStyle Hidden"
+						  
 							"""
 															
 					} catch (err) {
