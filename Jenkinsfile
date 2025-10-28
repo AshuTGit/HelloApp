@@ -61,9 +61,9 @@ pipeline {
 						echo "Starting Tomcat..."
 
 						bat """
-						     call "${TOMCAT_HOME}\\bin\\service.bat" run
-							 exit /b 0
-							 timeout(time: 15, unit: 'SECONDS') {
+						    
+							 timeout(time: 75, unit: 'SECONDS') {
+							 		echo "Starting Tomcattttttttttt..."
 								    bat 'call "C:\\Tomcat9.0\\bin\\catalina.bat" run'
 								}
 						  
