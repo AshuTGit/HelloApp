@@ -62,10 +62,8 @@ pipeline {
 
 						bat """
 						    
-							 timeout(time: 75, unit: 'SECONDS') {
-							 		 "start \"Tomcat\" \"${TOMCAT_HOME}\\bin\\startup.bat\""
-									 exit /b 0
-								}
+							call "${TOMCAT_HOME}\\bin\\service.bat" run
+							 exit /b 0
 						  
 							"""
 															
