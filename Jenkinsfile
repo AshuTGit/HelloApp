@@ -62,7 +62,7 @@ pipeline {
 
 						bat """
 						    
-							call "${TOMCAT_HOME}\\bin\\service.bat" run
+							start " " "${TOMCAT_HOME}\\bin\\catalina.bat" start
 													  
 							"""
 															
