@@ -60,12 +60,11 @@ pipeline {
 
 						echo "Starting Tomcat..."
 
-						bat """
-						    
-							start " " "${TOMCAT_HOME}\\bin\\catalina.bat" start
-													  
-							"""
-															
+						powershell '''
+					            $tomcatPath = "${env:TOMCAT_HOME}\\bin\\catalina.bat"
+					            Start-Process -FilePath $tomcatPath -ArgumentList "start" -WindowStyle Hidden
+					        '''
+																				
 					} catch (err) {
 						 echo 'issue with Deployment. Rollback is in progress.'
 					}
