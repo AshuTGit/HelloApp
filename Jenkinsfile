@@ -63,7 +63,8 @@ pipeline {
 						            cd /d "${TOMCAT_HOME}\\bin"
 						            start "" cmd /c catalina.bat start
 						        """
-																				
+									echo 'Tomcat started successfully (detached).'
+              						  sleep(time: 30, unit: 'SECONDS')											
 					} catch (err) {
 						 echo 'issue with Deployment. Rollback is in progress.'
 					}
