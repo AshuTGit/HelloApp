@@ -62,7 +62,7 @@ pipeline {
 
 						bat """
 						    
-							call "${TOMCAT_HOME}\\bin\\service.bat" install
+							call "${TOMCAT_HOME}\\bin\\service.bat" run
 													  
 							"""
 															
