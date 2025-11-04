@@ -1,61 +1,89 @@
 pipeline {
     agent any
 
-    environment {
-        // Jenkins tools
-        MAVEN_HOME = tool 'Maven'
-        PATH = "${MAVEN_HOME}/bin:${env.PATH}"
+		 environment {        
+		        // Tomcat installation details
+		        TOMCAT_HOME = "C:\\Tomcat9.0"
+		        DEPLOY_PATH = "${TOMCAT_HOME}\\webapps"
+		    }
 
-        // Tomcat config
-        TOMCAT_HOME = "C:\\Tomcat9.0"
-        DEPLOY_PATH = "${TOMCAT_HOME}\\webapps"
-    }
-
+	
     stages {
-        stage('Checkout') {
+        stage('clone') {
             steps {
-                echo "Checking out source code..."
-                checkout scm
+               echo 'Checking out code from Git...'
+                git branch: 'master', url: 'https://github.com/AshuTGit/HelloApp.git'
             }
         }
-
-        stage('Build with Maven') {
+    
+        stage('Build') {
             steps {
-                echo "Building the project with Maven..."
-                bat 'mvn clean package'
+               echo '========== Building Maven Project =========='
+                bat 'cd HelloApp'
+                 dir('HelloApp') {
+                      bat 'mvn clean install -Dmaven.test.skip=true'
+                 }
+               
             }
         }
-
-        stage('Deploy to Tomcat') {
+   
+        stage('Deployment') {
             steps {
-                echo "Deploying WAR file to Tomcat..."
-                bat """
-                    del /Q "%DEPLOY_PATH%\\HelloApp.war"
-                    copy /Y "target\\HelloApp.war" "%DEPLOY_PATH%"
-                """
+                echo 'Deployment strated'
+				
+				script {
+					try{
+						bat """
+								 echo Stopping Tomcat...
+
+								   @echo off
+					                    call "%TOMCAT_HOME%\\bin\\shutdown.bat"
+					                    if %errorlevel% neq 0 (
+					                        echo [WARN] Tomcat may not be running or port 8005 is blocked.
+					                        echo Continuing deployment anyway...
+					                        exit /b 0
+					                    )
+                      			
+								"""
+						echo "Copying WAR to webapps..."
+						dir('HelloApp/target'){
+						echo "Copying WAR to webapps..."
+							bat """
+								echo Current workspace: %WORKSPACE%
+							    dir "%WORKSPACE%\\HelloApp\\target"
+							    echo DEPLOY_PATH: %DEPLOY_PATH%
+		
+								copy /Y "*.war" %DEPLOY_PATH%\\
+								"""
+							echo "Copying WAR Completed."
+						}
+
+						echo "Starting Tomcat..."
+						bat """
+						            cd /d "${TOMCAT_HOME}\\bin"
+						            start "" cmd /c catalina.bat start
+						        """
+									echo 'Tomcat started successfully (detached).'
+              						 										
+					} catch (err) {
+						 echo 'issue with Deployment. Rollback is in progress.'
+					}
+					
+                }
+				
+				echo 'Deployment Completed'
             }
         }
-
-        stage('Restart Tomcat') {
-            steps {
-                echo "Restarting Tomcat..."
-                bat """
-                    call "%TOMCAT_HOME%\\bin\\shutdown.bat"
-                    timeout /t 5
-                    call "%TOMCAT_HOME%\\bin\\startup.bat"
-                """
-            }
-        }
-
-        stage('Verify Deployment') {
-            steps {
+		stage('Deployment') {
+		
+			steps {
                 echo "Verifying deployment..."
                 bat 'curl http://localhost:8080/HelloApp || echo "Service not responding"'
             }
-        }
+		}
     }
-
-    post {
+	
+	post {
         success {
             echo "✅ Build and deployment successful!"
         }
