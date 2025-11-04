@@ -78,7 +78,7 @@ pipeline {
 		
 			steps {
                 echo "Verifying deployment..."
-                bat 'curl http://localhost:8080/HelloApp || echo "Service not responding"'
+                bat 'curl http://localhost:8081/HelloApp-0.0.1-SNAPSHOT/hello/msg || echo "Service not responding"'
             }
 		}
     }
