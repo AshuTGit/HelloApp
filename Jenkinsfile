@@ -74,7 +74,7 @@ pipeline {
 				echo 'Deployment Completed'
             }
         }
-		stage('Deployment') {
+		stage('Verification') {
 		
 			steps {
                 echo "Verifying deployment..."
